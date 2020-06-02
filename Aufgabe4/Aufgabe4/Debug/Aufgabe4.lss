@@ -1,0 +1,253 @@
+
+Aufgabe4.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000002  00800100  00000168  000001dc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000168  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  000001de  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000210  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  0000024c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000719  00000000  00000000  00000284  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000066d  00000000  00000000  0000099d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000290  00000000  00000000  0000100a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  0000009c  00000000  00000000  0000129c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000037f  00000000  00000000  00001338  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000cb  00000000  00000000  000016b7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000028  00000000  00000000  00001782  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+   8:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+   c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  10:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  14:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  18:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  1c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  20:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  24:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  28:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  2c:	0c 94 8b 00 	jmp	0x116	; 0x116 <__vector_11>
+  30:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  34:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  38:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  3c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  40:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  44:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  48:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  4c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  50:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  54:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  58:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  5c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  60:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  64:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+
+00000074 <__do_copy_data>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	e8 e6       	ldi	r30, 0x68	; 104
+  7c:	f1 e0       	ldi	r31, 0x01	; 1
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
+  80:	05 90       	lpm	r0, Z+
+  82:	0d 92       	st	X+, r0
+  84:	a2 30       	cpi	r26, 0x02	; 2
+  86:	b1 07       	cpc	r27, r17
+  88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
+  8a:	0e 94 af 00 	call	0x15e	; 0x15e <main>
+  8e:	0c 94 b2 00 	jmp	0x164	; 0x164 <_exit>
+
+00000092 <__bad_interrupt>:
+  92:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000096 <init>:
+
+ //INITIALIZE METHOD
+ void init(){
+	 uint8_t weite = 0;
+	 uint8_t richtung = 1;
+	 DDRD |= (1 << DDD6);
+  96:	56 9a       	sbi	0x0a, 6	; 10
+	 // PD6 is now an output
+	 
+	 // init PWM
+	 OCR0A = 128;
+  98:	80 e8       	ldi	r24, 0x80	; 128
+  9a:	87 bd       	out	0x27, r24	; 39
+	 // set PWM for 50% duty cycle
+	 TCCR0A |= (1 << COM0A1);
+  9c:	84 b5       	in	r24, 0x24	; 36
+  9e:	80 68       	ori	r24, 0x80	; 128
+  a0:	84 bd       	out	0x24, r24	; 36
+	 // set none-inverting mode
+	 TCCR0A |= (1 << WGM02) | (1 << WGM00);
+  a2:	84 b5       	in	r24, 0x24	; 36
+  a4:	89 60       	ori	r24, 0x09	; 9
+  a6:	84 bd       	out	0x24, r24	; 36
+	 // set fast PWM Mode
+	 TCCR0B |= (1 << CS01);
+  a8:	85 b5       	in	r24, 0x25	; 37
+  aa:	82 60       	ori	r24, 0x02	; 2
+  ac:	85 bd       	out	0x25, r24	; 37
+	 // set prescaler to 8 and starts PWM
+	 
+	 // init timer
+	 OCR1A = 0x270;
+  ae:	80 e7       	ldi	r24, 0x70	; 112
+  b0:	92 e0       	ldi	r25, 0x02	; 2
+  b2:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__DATA_REGION_ORIGIN__+0x29>
+  b6:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__DATA_REGION_ORIGIN__+0x28>
+	 // Mode 4, CTC on OCR1A
+	 TCCR1B |= (1 << WGM12);
+  ba:	e1 e8       	ldi	r30, 0x81	; 129
+  bc:	f0 e0       	ldi	r31, 0x00	; 0
+  be:	80 81       	ld	r24, Z
+  c0:	88 60       	ori	r24, 0x08	; 8
+  c2:	80 83       	st	Z, r24
+	 //Set interrupt on compare match
+	 TIMSK1 |= (1 << OCIE1A);
+  c4:	af e6       	ldi	r26, 0x6F	; 111
+  c6:	b0 e0       	ldi	r27, 0x00	; 0
+  c8:	8c 91       	ld	r24, X
+  ca:	82 60       	ori	r24, 0x02	; 2
+  cc:	8c 93       	st	X, r24
+	 // set prescaler to 1024 and start the timer
+	 TCCR1B |= (1 << CS12) | (1 << CS10);
+  ce:	80 81       	ld	r24, Z
+  d0:	85 60       	ori	r24, 0x05	; 5
+  d2:	80 83       	st	Z, r24
+	 
+	 sei();
+  d4:	78 94       	sei
+  d6:	08 95       	ret
+
+000000d8 <step>:
+// step function
+// increments / decrements OCRA0A depending on direction
+// turns direction around if reached either end
+void step(){
+	
+	if(OCR0A==0xFF){
+  d8:	87 b5       	in	r24, 0x27	; 39
+  da:	8f 3f       	cpi	r24, 0xFF	; 255
+  dc:	31 f4       	brne	.+12     	; 0xea <step+0x12>
+		OCR0A--;
+  de:	87 b5       	in	r24, 0x27	; 39
+  e0:	81 50       	subi	r24, 0x01	; 1
+  e2:	87 bd       	out	0x27, r24	; 39
+		direction = false;
+  e4:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__data_start>
+  e8:	08 95       	ret
+	}
+	else if(OCR0A==0x00){
+  ea:	87 b5       	in	r24, 0x27	; 39
+  ec:	81 11       	cpse	r24, r1
+  ee:	07 c0       	rjmp	.+14     	; 0xfe <step+0x26>
+		OCR0A++;
+  f0:	87 b5       	in	r24, 0x27	; 39
+  f2:	8f 5f       	subi	r24, 0xFF	; 255
+  f4:	87 bd       	out	0x27, r24	; 39
+		direction = true;
+  f6:	81 e0       	ldi	r24, 0x01	; 1
+  f8:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+  fc:	08 95       	ret
+	}
+	else if(direction){
+  fe:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+ 102:	88 23       	and	r24, r24
+ 104:	21 f0       	breq	.+8      	; 0x10e <step+0x36>
+		OCR0A ++;
+ 106:	87 b5       	in	r24, 0x27	; 39
+ 108:	8f 5f       	subi	r24, 0xFF	; 255
+ 10a:	87 bd       	out	0x27, r24	; 39
+ 10c:	08 95       	ret
+	}
+	else{
+		OCR0A--;
+ 10e:	87 b5       	in	r24, 0x27	; 39
+ 110:	81 50       	subi	r24, 0x01	; 1
+ 112:	87 bd       	out	0x27, r24	; 39
+ 114:	08 95       	ret
+
+00000116 <__vector_11>:
+
+
+// Aufgabenbeschreibung: Dimmen einer LED über PWM
+
+ISR (TIMER1_COMPA_vect)
+{
+ 116:	1f 92       	push	r1
+ 118:	0f 92       	push	r0
+ 11a:	0f b6       	in	r0, 0x3f	; 63
+ 11c:	0f 92       	push	r0
+ 11e:	11 24       	eor	r1, r1
+ 120:	2f 93       	push	r18
+ 122:	3f 93       	push	r19
+ 124:	4f 93       	push	r20
+ 126:	5f 93       	push	r21
+ 128:	6f 93       	push	r22
+ 12a:	7f 93       	push	r23
+ 12c:	8f 93       	push	r24
+ 12e:	9f 93       	push	r25
+ 130:	af 93       	push	r26
+ 132:	bf 93       	push	r27
+ 134:	ef 93       	push	r30
+ 136:	ff 93       	push	r31
+	step();
+ 138:	0e 94 6c 00 	call	0xd8	; 0xd8 <step>
+}
+ 13c:	ff 91       	pop	r31
+ 13e:	ef 91       	pop	r30
+ 140:	bf 91       	pop	r27
+ 142:	af 91       	pop	r26
+ 144:	9f 91       	pop	r25
+ 146:	8f 91       	pop	r24
+ 148:	7f 91       	pop	r23
+ 14a:	6f 91       	pop	r22
+ 14c:	5f 91       	pop	r21
+ 14e:	4f 91       	pop	r20
+ 150:	3f 91       	pop	r19
+ 152:	2f 91       	pop	r18
+ 154:	0f 90       	pop	r0
+ 156:	0f be       	out	0x3f, r0	; 63
+ 158:	0f 90       	pop	r0
+ 15a:	1f 90       	pop	r1
+ 15c:	18 95       	reti
+
+0000015e <main>:
+
+int main(void)
+{
+	init();
+ 15e:	0e 94 4b 00 	call	0x96	; 0x96 <init>
+ 162:	ff cf       	rjmp	.-2      	; 0x162 <main+0x4>
+
+00000164 <_exit>:
+ 164:	f8 94       	cli
+
+00000166 <__stop_program>:
+ 166:	ff cf       	rjmp	.-2      	; 0x166 <__stop_program>
