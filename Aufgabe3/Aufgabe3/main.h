@@ -13,11 +13,7 @@
 #define CLEAR_BIT(PORT,BIT) PORT&=~(1<<BIT)
 #define TOGGLE_BIT(PORT,BIT) PORT ^=(1<<BIT)
 
-#define FOSC 16000000UL                       // Clock Speed
-#define BAUD 9600
-#define MYUBRR FOSC/16/BAUD -1
-
-// Richtungs variable zeigt an in welche richtung das Licht Läuft
+// Richtungs Variable zeigt an in welche richtung das Licht Läuft
 bool direction = true;
 // Schrittzähler bestimmt in welchem Status die Lichter sind
 int stepCount = 0;
@@ -26,16 +22,18 @@ int stepCount = 0;
  void init(){
 	 // Port B als Ausgang
 	 DDRB = 0xFF;
-	 DDRB = 0x00;
 	 
-	 // timer1 initialiiseren
+	 // Port B auf low setzen
+	 PORTB = 0x00;
+	 
+	 // Timer1 initialiiseren
 	 // Wert wurde nicht durch ausrechnen ermittelt sondern so gewält das, dass Lauflicht cool aussieht
 	 OCR1A = 0x270;
 
 	 // Modus 4, CTC on OCR1A
 	 TCCR1B |= (1 << WGM12);
 
-	 //Intterrupt bei Vergleichs Übereinstimmung (Compare match)
+	 //Interrupt bei Vergleichs Übereinstimmung (Compare match)
 	 TIMSK1 |= (1 << OCIE1A);
 
 	 // Prescaler auf 1024 und Timer starten
@@ -46,7 +44,7 @@ int stepCount = 0;
 	 
  }
  
- // setzte je nach wert des StepCounts das korrekte licht auf an und die restelichen aus
+ // setzte je nach Wert des StepCounts das korrekte licht auf an und die restelichen aus
   void setLights(){
 	  if(stepCount == 0){
 		  PORTB = 0b100000;
@@ -74,15 +72,11 @@ int stepCount = 0;
   // dreht am Anfang bzw Ende die Richtung um
   void doStep(){
 	  if(stepCount == 0){
-		  if(!direction){
-			  direction = true;
-		  }
+		  direction = true;
 		  stepCount++;
 	  }
 	  else if(stepCount == 5){
-		  if(direction){
-			  direction = false;
-		  }
+		  direction = false;
 		  stepCount--;
 	  }
 	  else if(direction){

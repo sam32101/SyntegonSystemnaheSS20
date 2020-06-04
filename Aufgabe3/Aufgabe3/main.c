@@ -21,6 +21,6 @@ int main(void)
 {
 	// initialisieren
 	init();	
-	while(1){}
+	while(1);
 }
 

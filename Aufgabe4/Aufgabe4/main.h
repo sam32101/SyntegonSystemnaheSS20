@@ -22,10 +22,13 @@ bool direction = true;
 	 
 	 OCR0A = 128;
 	 // setze PWM auf 50 % für den Anfang
+	 
 	 TCCR0A |= (1 << COM0A1);
 	 // setze nicht invertierenden Modus
+	 
 	 TCCR0A |= (1 << WGM02) | (1 << WGM00);
 	 // setze "fast PWM" Modus
+	 
 	 TCCR0B |= (1 << CS01);
 	 // setze prescaler auf 8 und starte PWM
 	 

@@ -21,7 +21,7 @@
 	
 	DDRD &= ~(1 << DDD2);     // PD2 (INT0) zu Eingang machen
 
-	PORTD |= (1 << PORTD2);    // Pullup für PD2
+	PORTD |= (1 << PORTD2);   // Pullup für PD2
 	
 	DDRD &= ~(1 << DDD3);     // PD3 (INT1) zu Eingang machen
 
@@ -31,7 +31,6 @@
 	EICRA |= (1 << ISC10);    // Interrupt löst bei Wertänderung auf INT1 aus
 	EIMSK |= (1 << INT0);     // INT0 Interrupt aktivieren
 	EIMSK |= (1 << INT1);     // INT1 Interrupt aktivieren
-
 	
 	// Timer Modus auf CDC (Clear Timer on Compare) setzen
 	TCCR0A |= (1 << WGM01);
@@ -40,7 +39,7 @@
 
 	TCCR0B |= (1 << CS02);		//prescaler auf 256 setzen und timer starten
 	
-	sei();                    // turn on interrupts
+	sei();                    // interrupts einschalten
 	
  }
  
