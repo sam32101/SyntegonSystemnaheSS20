@@ -12,14 +12,14 @@
 #include <avr/interrupt.h>
 #include "main.h"
 
- ISR(TIMER1_COMPA_vect)
- {
+ISR(TIMER1_COMPA_vect)
+{
 	setLights();
- }
+}
 
 int main(void)
 {
-	// initialisieren
+	// Initialisieren
 	init();	
 	while(1);
 }

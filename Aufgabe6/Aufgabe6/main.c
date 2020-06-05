@@ -2,23 +2,23 @@
  * Aufgabe5.c
  *
  * Created: 30.05.2020 11:49:21
- * Author : Sam Harjung, Jens Langkammerer, Sören Krüger
- */ 
+ * Author : Sam Harjung, Jens Langkammerer, Sï¿½ren Krï¿½ger
+ */
 #include <avr/io.h>
 #include <util/delay.h>
 #include "main.h"
 
-// Aufgabenbeschreibung: Zwei analoge Eingänge (Potentiometer) zu digital wandeln 
-// und über die serielle Schnittstelle in 8 Bit Auflösung abwechselnd an den PC übertragen (Kanalmultiplexer)
+// Aufgabenbeschreibung: Zwei analoge Eingï¿½nge (Potentiometer) zu digital wandeln
+// und ï¿½ber die serielle Schnittstelle in 8 Bit Auflï¿½sung abwechselnd an den PC ï¿½bertragen (Kanalmultiplexer)
 
-// input flag , verwendet um ADC Multiplexer korrekten eingang zu übergeben
+// input flag , verwendet um ADC Multiplexer korrekten eingang zu ï¿½bergeben
 volatile bool input = true;
 
 // timer compare match interupt (alle .5 Sekunden)
 ISR (TIMER1_COMPA_vect)
 {
 	// lese je nach input flag Analog Eingang 1 oder 0 ein
-	// ändere flag wert
+	// ï¿½ndere flag wert
 	if(input){
 		ADCsingleREAD(0);
 	}
@@ -26,18 +26,18 @@ ISR (TIMER1_COMPA_vect)
 		ADCsingleREAD(1);
 	}
 	
-	// input flag flippen 
+	// input flag flippen
 	input = !input;
-	
+
 	// Gelesenen wert in Transmitbuffer schreiben
 	UDR0 = ADCH;
-	
+
 }
 
 
 int main(void)
 {
-	// initialisieren	
+	// initialisieren
 	initSerial();
 	initTimer();
 

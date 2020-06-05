@@ -16,36 +16,28 @@
 // Richtungsvariable bestimmt ob LED gerade heller oder dunkler geregelt wird
 bool direction = true;
 
- void init(){
-	 DDRD |= (1 << DDD6);
-	 //PD6 als Ausgang
+void init(){
+	SET_BIT(DDRD,DDD6);						// PD6 als Ausgang
 	 
-	 OCR0A = 128;
-	 // setze PWM auf 50 % für den Anfang
+	OCR0A = 128;							// setze PWM auf 50 % für den Anfang
 	 
-	 TCCR0A |= (1 << COM0A1);
-	 // setze nicht invertierenden Modus
+	SET_BIT(TCCR0A,COM0A1);					// setze nicht invertierenden Modus
 	 
-	 TCCR0A |= (1 << WGM02) | (1 << WGM00);
-	 // setze "fast PWM" Modus
+	SET_BIT(TCCR0A,WGM02) | (1 << WGM00);	// setze "fast PWM" Modus
 	 
-	 TCCR0B |= (1 << CS01);
-	 // setze prescaler auf 8 und starte PWM
+	SET_BIT(TCCR0B,CS01);					// setze prescaler auf 8 und starte PWM
 	 
-	 // init timer
-	 OCR1A = 0x270;
-	 // Mode 4, CTC on OCR1A
-	 TCCR1B |= (1 << WGM12);
-	 //Set interrupt on compare match
-	 TIMSK1 |= (1 << OCIE1A);
-	 // set prescaler to 1024 and start the timer
-	 TCCR1B |= (1 << CS12) | (1 << CS10);
+	OCR1A = 0x270;							// Timer initialisieren
 	 
-	 sei();
-	 // enable interrupts
+	SET_BIT(TCCR1B,WGM12);					// Modus 4, CTC on OCR1A
 	 
+	SET_BIT(TIMSK1,OCIE1A);					// Interrupt bei Vergleichs Übereinstimmung (Compare match)
 	 
- }
+	SET_BIT(TCCR1B,CS12) | (1 << CS10);		// Prescaler auf 1024 setzen und Timer starten
+	 
+	sei();									// enable interrupts
+	 
+}
 
 // Schritt Methode
 // Erhöht bzw verringert OCR0A abhängig von der Richtung
