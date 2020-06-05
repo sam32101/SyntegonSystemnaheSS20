@@ -23,7 +23,7 @@ void init(){
 	 
 	SET_BIT(TCCR0A,COM0A1);					// setze nicht invertierenden Modus
 	 
-	SET_BIT(TCCR0A,WGM02) | (1 << WGM00);	// setze "fast PWM" Modus
+	SET_BIT(TCCR0A,WGM02); 	SET_BIT(TCCR0A,WGM00);	// setze "fast PWM" Modus
 	 
 	SET_BIT(TCCR0B,CS01);					// setze prescaler auf 8 und starte PWM
 	 
@@ -33,7 +33,7 @@ void init(){
 	 
 	SET_BIT(TIMSK1,OCIE1A);					// Interrupt bei Vergleichs Übereinstimmung (Compare match)
 	 
-	SET_BIT(TCCR1B,CS12) | (1 << CS10);		// Prescaler auf 1024 setzen und Timer starten
+	SET_BIT(TCCR1B,CS12); SET_BIT(TCCR1B,CS10);		// Prescaler auf 1024 setzen und Timer starten
 	 
 	sei();									// enable interrupts
 	 

@@ -37,8 +37,8 @@ void init(){
 	SET_BIT(TIMSK1,OCIE1A);
 
 	// Prescaler auf 1024 und Timer starten
-	SET_BIT(TCCR1B,CS12) | (1 << CS10);
-
+	SET_BIT(TCCR1B,CS12); SET_BIT(TCCR1B,CS10) ;
+	
 	// Interrupts aktivieren
 	sei();
 }

@@ -38,13 +38,13 @@ void initTimer(){
 	// [ (16MHz / 256) * 0.5]-1 = 31249 = 7A11
 	OCR1A = 0x7A11;
 	
-	TCCR1B |= (1 << WGM12);
+	SET_BIT(TCCR1B, WGM12);
 	// Modus 4, CTC auf OCR1A
-	
-	TIMSK1 |= (1 << OCIE1A);
+
+	SET_BIT(TIMSK1,OCIE1A);
 	//Löse Interupt bei Vergleichsübereinstimmung ( compare match ) aus
 	
-	TCCR1B |= (1 << CS12);
+	SET_BIT(TCCR1B, CS12);
 	// prescaler auf 256 und timer starten
 	
 	sei();

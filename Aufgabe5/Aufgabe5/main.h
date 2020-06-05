@@ -26,7 +26,10 @@ void init(){
 	SET_BIT(ADMUX,REFS0);									//  AVcc als Referenz Spannung
 	CLEAR_BIT(ADMUX,ADLAR);									//  10 bit AUfl�sung
 
-	SET_BIT(ADCSRA,ADPS2) | (1 << ADPS1) | (1 << ADPS0);	// 128 prescaler f�r 16Mhz
+	SET_BIT(ADCSRA,ADPS2);
+	SET_BIT(ADCSRA,ADPS1);
+	SET_BIT(ADCSRA,ADPS0);									// 128 prescaler f�r 16Mhz
+	
 	SET_BIT(ADCSRA,ADATE);									// Setze ADC Auto Trigger  (um freerunning Modus verwenden zu k�nnen)
 
 	ADCSRB = 0;												// "free running" Modus ( durchgehende Umwandlung)
@@ -41,7 +44,9 @@ void init(){
 	UBRR0L = MYUBRR;										// untere 4 bits
 
 	SET_BIT(UCSR0B,TXEN0);									// �bertragung aktivieren
-	SET_BIT(UCSR0C,UCSZ01) | (1 << UCSZ00);					// frame definieren: 8data, 1 stp
+	
+	SET_BIT(UCSR0C,UCSZ01);
+	SET_BIT(UCSR0C, UCSZ00);								// frame definieren: 8data, 1 stp
 
 	sei();													// aktiviere interrupts
 

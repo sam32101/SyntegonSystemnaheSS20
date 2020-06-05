@@ -91,70 +91,70 @@ Disassembly of section .text:
 #define MYUBRR FOSC/16/BAUD -1
 
 void init(){
-	
-	// Analogen Eingang initialisieren 
-	ADMUX = 0;                //  ADC0 als Input verwenden
+
+	// Analogen Eingang initialisieren
+	ADMUX = 0;												//  ADC0 als Input verwenden
   90:	ec e7       	ldi	r30, 0x7C	; 124
   92:	f0 e0       	ldi	r31, 0x00	; 0
   94:	10 82       	st	Z, r1
-	ADMUX |= (1 << REFS0);    //  AVcc als Referenz Spannung
+	SET_BIT(ADMUX,REFS0);									//  AVcc als Referenz Spannung
   96:	80 81       	ld	r24, Z
   98:	80 64       	ori	r24, 0x40	; 64
   9a:	80 83       	st	Z, r24
-	ADMUX &= ~(1 << ADLAR);   //  10 bit AUflösung 
+	CLEAR_BIT(ADMUX,ADLAR);									//  10 bit AUflï¿½sung
   9c:	80 81       	ld	r24, Z
   9e:	8f 7d       	andi	r24, 0xDF	; 223
   a0:	80 83       	st	Z, r24
 
-	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // 128 prescaler für 16Mhz
+	SET_BIT(ADCSRA,ADPS2) | (1 << ADPS1) | (1 << ADPS0);	// 128 prescaler fï¿½r 16Mhz
   a2:	ea e7       	ldi	r30, 0x7A	; 122
   a4:	f0 e0       	ldi	r31, 0x00	; 0
   a6:	80 81       	ld	r24, Z
   a8:	87 60       	ori	r24, 0x07	; 7
   aa:	80 83       	st	Z, r24
-	ADCSRA |= (1 << ADATE);   // Setze ADC Auto Trigger  (um freerunning Modus verwenden zu können)
+	SET_BIT(ADCSRA,ADATE);									// Setze ADC Auto Trigger  (um freerunning Modus verwenden zu kï¿½nnen)
   ac:	80 81       	ld	r24, Z
   ae:	80 62       	ori	r24, 0x20	; 32
   b0:	80 83       	st	Z, r24
-	
-	ADCSRB = 0;               // "free running" Modus ( durchgehende Umwandlung)
+
+	ADCSRB = 0;												// "free running" Modus ( durchgehende Umwandlung)
   b2:	10 92 7b 00 	sts	0x007B, r1	; 0x80007b <__DATA_REGION_ORIGIN__+0x1b>
 
-	ADCSRA |= (1 << ADEN);    // ADC aktivieren
+	SET_BIT(ADCSRA,ADEN);									// ADC aktivieren
   b6:	80 81       	ld	r24, Z
   b8:	80 68       	ori	r24, 0x80	; 128
   ba:	80 83       	st	Z, r24
-	ADCSRA |= (1 << ADIE);    // Interrupts aktivieren
+	SET_BIT(ADCSRA,ADIE);									// Interrupts aktivieren
   bc:	80 81       	ld	r24, Z
   be:	88 60       	ori	r24, 0x08	; 8
   c0:	80 83       	st	Z, r24
-	ADCSRA |= (1 << ADSC);    // Starte die ADC
+	SET_BIT(ADCSRA,ADSC);									// Starte die ADC
   c2:	80 81       	ld	r24, Z
   c4:	80 64       	ori	r24, 0x40	; 64
   c6:	80 83       	st	Z, r24
-	
+
 	// Serielle Kommunikation initialisieren
-	//Setzte baud rate 
-	UBRR0H = (MYUBRR >> 8); // obere 4 bits
+	// Setzte baud rate
+	UBRR0H = (MYUBRR >> 8);									// obere 4 bits
   c8:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__DATA_REGION_ORIGIN__+0x65>
-	UBRR0L = MYUBRR;		// untere 4 bits
+	UBRR0L = MYUBRR;										// untere 4 bits
   cc:	87 e6       	ldi	r24, 0x67	; 103
   ce:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__DATA_REGION_ORIGIN__+0x64>
-	
-	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);    // frame definieren: 8 bit char größe, 1 stp
-  d2:	e2 ec       	ldi	r30, 0xC2	; 194
+
+	SET_BIT(UCSR0B,TXEN0);									// ï¿½bertragung aktivieren
+  d2:	e1 ec       	ldi	r30, 0xC1	; 193
   d4:	f0 e0       	ldi	r31, 0x00	; 0
   d6:	80 81       	ld	r24, Z
-  d8:	86 60       	ori	r24, 0x06	; 6
+  d8:	88 60       	ori	r24, 0x08	; 8
   da:	80 83       	st	Z, r24
-	UCSR0B |= (1 << TXEN0);      // transmitter aktivieren
-  dc:	e1 ec       	ldi	r30, 0xC1	; 193
+	SET_BIT(UCSR0C,UCSZ01) | (1 << UCSZ00);					// frame definieren: 8data, 1 stp
+  dc:	e2 ec       	ldi	r30, 0xC2	; 194
   de:	f0 e0       	ldi	r31, 0x00	; 0
   e0:	80 81       	ld	r24, Z
-  e2:	88 60       	ori	r24, 0x08	; 8
+  e2:	86 60       	ori	r24, 0x06	; 6
   e4:	80 83       	st	Z, r24
-	
-	sei();    // aktiviere interrupts
+
+	sei();													// aktiviere interrupts
   e6:	78 94       	sei
   e8:	08 95       	ret
 
@@ -202,7 +202,7 @@ ISR(ADC_vect)
  11e:	00 c0       	rjmp	.+0      	; 0x120 <__vector_21+0x36>
  120:	00 00       	nop
 	
-	// zwischen high und low byte kurz warten, da es sonst zu Fehlern kommt, bzw nur das high byte übertragen wird
+	// zwischen high und low byte kurz warten, da es sonst zu Fehlern kommt bzw nur das high byte übertragen wird
 	_delay_ms(50);	
 	
 	UDR0 = lowByte;
