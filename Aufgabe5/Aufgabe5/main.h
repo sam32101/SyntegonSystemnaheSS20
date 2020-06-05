@@ -41,11 +41,11 @@ void init(){
 	UBRR0H = (MYUBRR >> 8); // obere 4 bits
 	UBRR0L = MYUBRR;		// untere 4 bits
 	
-	UCSR0B |= (1 << TXEN0);      // Übertragung aktivieren
-	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);    // frame definieren: 8data, 1 stp
+	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);    // frame definieren: 8 bit char größe, 1 stp
+	UCSR0B |= (1 << TXEN0);      // transmitter aktivieren
 	
 	sei();    // aktiviere interrupts
-
+ 
 }
 
 

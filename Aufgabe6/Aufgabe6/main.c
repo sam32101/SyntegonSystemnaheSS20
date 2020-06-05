@@ -11,30 +11,35 @@
 // Aufgabenbeschreibung: Zwei analoge Eingänge (Potentiometer) zu digital wandeln 
 // und über die serielle Schnittstelle in 8 Bit Auflösung abwechselnd an den PC übertragen (Kanalmultiplexer)
 
+// input flag , verwendet um ADC Multiplexer korrekten eingang zu übergeben
+volatile bool input = true;
+
+// timer compare match interupt (alle .5 Sekunden)
+ISR (TIMER1_COMPA_vect)
+{
+	// lese je nach input flag Analog Eingang 1 oder 0 ein
+	// ändere flag wert
+	if(input){
+		ADCsingleREAD(0);
+	}
+	else{
+		ADCsingleREAD(1);
+	}
+	
+	// input flag flippen 
+	input = !input;
+	
+	// Gelesenen wert in Transmitbuffer schreiben
+	UDR0 = ADCH;
+	
+}
+
 
 int main(void)
 {
-
 	// initialisieren	
 	initSerial();
+	initTimer();
 
-	while (1)
-	{
-		// Eingang 0 von Analog zu Digital wandeln
-		ADCsingleREAD(0);			
-		// Ergebnis übertragen
-		UDR0 = ADCH;
-		
-		_delay_ms(100);
-		// kurz warten um Fehler zu vermeiden
-		
-		// Eingang 1 zu Digital wandeln
-		ADCsingleREAD(1);
-		// Ergebnis Übertragen
-		UDR0 = ADCH;
-		
-		// kurz warten um Fehler zu vermeiden
-		_delay_ms(100);
-		
-	}
+	while (1);
 }

@@ -30,7 +30,7 @@ int stepcount = 0;
 	 TIMSK1 |= (1 << OCIE1A);
 	 //Löse Interupt bei Vergleichsübereinstimmung ( compare match ) aus
 
-	 TCCR1B |= (1 << CS12)
+	 TCCR1B |= (1 << CS12);
 	 // prescaler auf 256 und timer starten
 
 	 sei();

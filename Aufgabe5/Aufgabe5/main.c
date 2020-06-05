@@ -26,8 +26,8 @@ ISR(ADC_vect)
 	
 	UDR0 = highByte;			
 	
-	// zwischen high und low byte kurz warten, da es sonst zu Fehlern kommt
-	_delay_ms(100);	
+	// zwischen high und low byte kurz warten, da es sonst zu Fehlern kommt bzw nur das high byte übertragen wird
+	_delay_ms(50);	
 	
 	UDR0 = lowByte;
 

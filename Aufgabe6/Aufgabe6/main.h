@@ -33,6 +33,26 @@ void initSerial(){
 	
 }
 
+//timer initialisieren
+void initTimer(){
+	// Jeden wert 1x Pro Sekunde auslesen = 2 Aktionen pro Sekunde
+	// [ (16MHz / 256) * 0.5]-1 = 31249 = 7A11
+	OCR1A = 0x7A11;
+	
+	TCCR1B |= (1 << WGM12);
+	// Modus 4, CTC auf OCR1A
+	
+	TIMSK1 |= (1 << OCIE1A);
+	//Löse Interupt bei Vergleichsübereinstimmung ( compare match ) aus
+	
+	TCCR1B |= (1 << CS12);
+	// prescaler auf 256 und timer starten
+	
+	sei();
+	// interrupts aktivieren
+	
+}
+
 // ADC für gegbenen Eingang durchführen (einmalig)
 void ADCsingleREAD(uint8_t adctouse)
 {
