@@ -22,10 +22,13 @@ ISR(ADC_vect)
 	lowByte = ADCL;
 	highByte = ADCH;
 	
-	// high und lowbyte nacheinander über die serielle schnitstelle Übertragen
+	// high und lowbyte nacheinander Übertragen ( In Transmit Buffer schreiben)
+	
 	UDR0 = highByte;			
-	// zwischen übertragung kurz warten da es sonst zu Fehlern kommt
+	
+	// zwischen high und low byte kurz warten, da es sonst zu Fehlern kommt
 	_delay_ms(100);	
+	
 	UDR0 = lowByte;
 
 }

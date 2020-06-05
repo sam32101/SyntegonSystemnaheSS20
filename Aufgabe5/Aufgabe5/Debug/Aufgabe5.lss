@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000064  00000000  00000000  00001354  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000003ae  00000000  00000000  000013b8  2**0
+ 10 .debug_str    000003c5  00000000  00000000  000013b8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000000ab  00000000  00000000  00001766  2**0
+ 11 .debug_loc    000000ab  00000000  00000000  0000177d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000020  00000000  00000000  00001811  2**0
+ 12 .debug_ranges 00000020  00000000  00000000  00001828  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -88,79 +88,78 @@ Disassembly of section .text:
   8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000090 <init>:
-
+#define MYUBRR FOSC/16/BAUD -1
 
 void init(){
 	
-	// initialize analog input
-	ADMUX = 0;                // use ADC0
+	// Analogen Eingang initialisieren 
+	ADMUX = 0;                //  ADC0 als Input verwenden
   90:	ec e7       	ldi	r30, 0x7C	; 124
   92:	f0 e0       	ldi	r31, 0x00	; 0
   94:	10 82       	st	Z, r1
-	ADMUX |= (1 << REFS0);    // use AVcc as the reference
+	ADMUX |= (1 << REFS0);    //  AVcc als Referenz Spannung
   96:	80 81       	ld	r24, Z
   98:	80 64       	ori	r24, 0x40	; 64
   9a:	80 83       	st	Z, r24
-	ADMUX &= ~(1 << ADLAR);   // clear for 10 bit resolution
+	ADMUX &= ~(1 << ADLAR);   //  10 bit AUflösung 
   9c:	80 81       	ld	r24, Z
   9e:	8f 7d       	andi	r24, 0xDF	; 223
   a0:	80 83       	st	Z, r24
 
-	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // 128 prescale for 16Mhz
+	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // 128 prescale für 16Mhz
   a2:	ea e7       	ldi	r30, 0x7A	; 122
   a4:	f0 e0       	ldi	r31, 0x00	; 0
   a6:	80 81       	ld	r24, Z
   a8:	87 60       	ori	r24, 0x07	; 7
   aa:	80 83       	st	Z, r24
-	ADCSRA |= (1 << ADATE);   // Set ADC Auto Trigger Enable
+	ADCSRA |= (1 << ADATE);   // Setze ADC Auto Trigger 
   ac:	80 81       	ld	r24, Z
   ae:	80 62       	ori	r24, 0x20	; 32
   b0:	80 83       	st	Z, r24
 	
-	ADCSRB = 0;               // 0 for free running mode
+	ADCSRB = 0;               // 0 für "free running" Modus
   b2:	10 92 7b 00 	sts	0x007B, r1	; 0x80007b <__DATA_REGION_ORIGIN__+0x1b>
 
-	ADCSRA |= (1 << ADEN);    // Enable the ADC
+	ADCSRA |= (1 << ADEN);    // ADC aktivieren
   b6:	80 81       	ld	r24, Z
   b8:	80 68       	ori	r24, 0x80	; 128
   ba:	80 83       	st	Z, r24
-	ADCSRA |= (1 << ADIE);    // Enable Interrupts
+	ADCSRA |= (1 << ADIE);    // Interrupts aktivieren
   bc:	80 81       	ld	r24, Z
   be:	88 60       	ori	r24, 0x08	; 8
   c0:	80 83       	st	Z, r24
-	ADCSRA |= (1 << ADSC);    // Start the ADC conversion
+	ADCSRA |= (1 << ADSC);    // Starte die ADC
   c2:	80 81       	ld	r24, Z
   c4:	80 64       	ori	r24, 0x40	; 64
   c6:	80 83       	st	Z, r24
 	
-	// initialize serial communication
-	/*Set baud rate */
+	// Serielle Kommunikation initialisieren
+	/*Setzte baud rate */
 	UBRR0H = (MYUBRR >> 8);
   c8:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__DATA_REGION_ORIGIN__+0x65>
 	UBRR0L = MYUBRR;
   cc:	87 e6       	ldi	r24, 0x67	; 103
   ce:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__DATA_REGION_ORIGIN__+0x64>
 	
-	UCSR0B |= (1 << TXEN0);      // Enable transmitter
+	UCSR0B |= (1 << TXEN0);      // Übertragung aktivieren
   d2:	e1 ec       	ldi	r30, 0xC1	; 193
   d4:	f0 e0       	ldi	r31, 0x00	; 0
   d6:	80 81       	ld	r24, Z
   d8:	88 60       	ori	r24, 0x08	; 8
   da:	80 83       	st	Z, r24
-	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);    // Set frame: 8data, 1 stp
+	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);    // setze frame: 8data, 1 stp
   dc:	e2 ec       	ldi	r30, 0xC2	; 194
   de:	f0 e0       	ldi	r31, 0x00	; 0
   e0:	80 81       	ld	r24, Z
   e2:	86 60       	ori	r24, 0x06	; 6
   e4:	80 83       	st	Z, r24
 	
-
-	sei();    // enable interrupts
+	sei();    // aktiviere interrupts
   e6:	78 94       	sei
   e8:	08 95       	ret
 
 000000ea <__vector_21>:
-// Bytes for storage of  ADCH / ADCL
+// Variablen um ADCH / ADCL zwischenzuspeichern
 volatile uint8_t highByte;
 volatile uint8_t lowByte;
 
@@ -175,6 +174,7 @@ ISR(ADC_vect)
   f6:	9f 93       	push	r25
   f8:	ef 93       	push	r30
   fa:	ff 93       	push	r31
+	// ADCL zuerst auslesen da beim auslesen von ADCH eine neue Konvertierung durchgeführt wird
 	lowByte = ADCL;
   fc:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <__DATA_REGION_ORIGIN__+0x18>
  100:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <_edata>
@@ -182,6 +182,7 @@ ISR(ADC_vect)
  104:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__DATA_REGION_ORIGIN__+0x19>
  108:	80 93 01 01 	sts	0x0101, r24	; 0x800101 <highByte>
 	
+	// high und lowbyte nacheinander über die serielle schnitstelle Übertragen
 	UDR0 = highByte;			
  10c:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <highByte>
  110:	e6 ec       	ldi	r30, 0xC6	; 198
@@ -199,6 +200,7 @@ ISR(ADC_vect)
  11c:	f1 f7       	brne	.-4      	; 0x11a <__vector_21+0x30>
  11e:	00 c0       	rjmp	.+0      	; 0x120 <__vector_21+0x36>
  120:	00 00       	nop
+	// zwischen übertragung kurz warten da es sonst zu Fehlern kommt
 	_delay_ms(100);	
 	UDR0 = lowByte;
  122:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
@@ -219,6 +221,7 @@ ISR(ADC_vect)
 
 int main(void)
 {
+	// initialisieren
 	init();
  13a:	0e 94 48 00 	call	0x90	; 0x90 <init>
  13e:	ff cf       	rjmp	.-2      	; 0x13e <main+0x4>

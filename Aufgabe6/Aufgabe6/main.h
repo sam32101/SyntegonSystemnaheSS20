@@ -29,11 +29,11 @@ void initSerial(){
 	UBRR0L = MYUBRR;
 	
 	UCSR0B |= (1 << TXEN0);      // Aktiviere transmitter
-	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);    // Setze frame: 8data, 1 stp
+	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);    // definiere frame: 8data, 1 stp
 	
 }
 
-// ADC für gegbenen Eingang durchführen
+// ADC für gegbenen Eingang durchführen (einmalig)
 void ADCsingleREAD(uint8_t adctouse)
 {
 	int ADCval;

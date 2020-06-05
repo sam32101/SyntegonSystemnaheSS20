@@ -8,8 +8,8 @@
 #include <util/delay.h>
 #include "main.h"
 
-//Aufgabenbeschreibung: Zwei analoge Eingänge (Potentiometer) zu digital wandeln 
-// und über die serielle Schnittstelle in 8 Bit Auflösung an den PC übertragen (Kanalmultiplexer)
+// Aufgabenbeschreibung: Zwei analoge Eingänge (Potentiometer) zu digital wandeln 
+// und über die serielle Schnittstelle in 8 Bit Auflösung abwechselnd an den PC übertragen (Kanalmultiplexer)
 
 
 int main(void)
