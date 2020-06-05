@@ -7,7 +7,7 @@
 
 
 // Aufgabenbeschreibung: 
-//Timerschaltung für 2 Töne (Kammerton A und Kammerton C): Per Taster (Interrupt) wird zwischen den Tönen hin und her geschaltet.
+// Timerschaltung für 2 Töne (Kammerton A und Kammerton C): Per Taster (Interrupt) wird zwischen den Tönen hin und her geschaltet.
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -27,13 +27,13 @@ ISR (INT1_vect)
 }
 
 
-ISR(TIMER0_COMPA_vect){
+ISR(TIMER0_COMPA_vect)
+{
 	TOGGLE_BIT(PORTB, PORTB5);
 }
 
 int main(void)
 {
-	init();	// initialisieren
+	init();		// Initialisieren
 	while(1);
 }
-

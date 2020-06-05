@@ -7,7 +7,7 @@
 
 #include <avr/io.h>
 #include "main.h"
-#include <avr/interrupt.h>s
+#include <avr/interrupt.h>
 
 // Aufgabenbeschreibung: Ampelschaltung mit drei LEDs: Zunächst leuchtet die rote LED 1000 ms, danach rot-gelb 100ms, grün 1000 ms und gelb 100ms. Danach beginnt er Zyklus von Vorne.
 
@@ -19,7 +19,6 @@ ISR (TIMER1_COMPA_vect)
 
 int main(void)
 {
-   init(); // initialisieren 
-   while (1);
+	init();			// Initialisieren 
+	while (1);
 }
-

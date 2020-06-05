@@ -15,26 +15,22 @@
 int main(void)
 {
 
-	// initialisieren	
-	initSerial();
+	initSerial();				// Initialisieren
 
 	while (1)
 	{
-		// Eingang 0 von Analog zu Digital wandeln
-		ADCsingleREAD(0);			
-		// Ergebnis übertragen
-		UDR0 = ADCH;
 		
-		_delay_ms(100);
-		// kurz warten um Fehler zu vermeiden
+		ADCsingleREAD(0);		// Eingang 0 von Analog zu Digital wandeln
 		
-		// Eingang 1 zu Digital wandeln
-		ADCsingleREAD(1);
-		// Ergebnis Übertragen
-		UDR0 = ADCH;
+		UDR0 = ADCH;			// Ergebnis übertragen
 		
-		// kurz warten um Fehler zu vermeiden
-		_delay_ms(100);
+		_delay_ms(100);			// kurz warten um Fehler zu vermeiden
+		
+		ADCsingleREAD(1);		// Eingang 1 zu Digital wandeln
+		
+		UDR0 = ADCH;			// Ergebnis Übertragen
+		
+		_delay_ms(100);			// kurz warten um Fehler zu vermeiden
 		
 	}
 }

@@ -3,7 +3,6 @@
  *
  * Created: 30.05.2020 11:50:25
  *  Author: Sam Harjung, Jens Langkammerer , Sören Krüger
- 
  */ 
 
 
@@ -23,28 +22,28 @@
 void init(){
 	
 	// Analogen Eingang initialisieren 
-	ADMUX = 0;                //  ADC0 als Input verwenden
-	ADMUX |= (1 << REFS0);    //  AVcc als Referenz Spannung
-	ADMUX &= ~(1 << ADLAR);   //  10 bit AUflösung 
+	ADMUX = 0;												//  ADC0 als Input verwenden
+	SET_BIT(ADMUX,REFS0);									//  AVcc als Referenz Spannung
+	CLEAR_BIT(ADMUX,ADLAR);									//  10 bit AUflösung 
 
-	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // 128 prescaler für 16Mhz
-	ADCSRA |= (1 << ADATE);   // Setze ADC Auto Trigger  (um freerunning Modus verwenden zu können)
+	SET_BIT(ADCSRA,ADPS2) | (1 << ADPS1) | (1 << ADPS0);	// 128 prescaler für 16Mhz
+	SET_BIT(ADCSRA,ADATE);									// Setze ADC Auto Trigger  (um freerunning Modus verwenden zu können)
 	
-	ADCSRB = 0;               // "free running" Modus ( durchgehende Umwandlung)
+	ADCSRB = 0;												// "free running" Modus ( durchgehende Umwandlung)
 
-	ADCSRA |= (1 << ADEN);    // ADC aktivieren
-	ADCSRA |= (1 << ADIE);    // Interrupts aktivieren
-	ADCSRA |= (1 << ADSC);    // Starte die ADC
+	SET_BIT(ADCSRA,ADEN);									// ADC aktivieren
+	SET_BIT(ADCSRA,ADIE);									// Interrupts aktivieren
+	SET_BIT(ADCSRA,ADSC);									// Starte die ADC
 	
 	// Serielle Kommunikation initialisieren
-	//Setzte baud rate 
-	UBRR0H = (MYUBRR >> 8); // obere 4 bits
-	UBRR0L = MYUBRR;		// untere 4 bits
+	// Setzte baud rate 
+	UBRR0H = (MYUBRR >> 8);									// obere 4 bits
+	UBRR0L = MYUBRR;										// untere 4 bits
 	
-	UCSR0B |= (1 << TXEN0);      // Übertragung aktivieren
-	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);    // frame definieren: 8data, 1 stp
+	SET_BIT(UCSR0B,TXEN0);									// Übertragung aktivieren
+	SET_BIT(UCSR0C,UCSZ01) | (1 << UCSZ00);					// frame definieren: 8data, 1 stp
 	
-	sei();    // aktiviere interrupts
+	sei();													// aktiviere interrupts
 
 }
 

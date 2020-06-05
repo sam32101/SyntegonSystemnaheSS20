@@ -18,9 +18,7 @@ ISR (TIMER1_COMPA_vect)
 
 int main(void)
 {
-	// initialisieren
-	init();
+	init();			// Initialisieren
 	while(1);
-
 }
 
